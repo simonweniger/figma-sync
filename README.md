@@ -56,7 +56,7 @@ Then in Claude Code:
 **For quick local testing** (no install, loads at startup):
 
 ```bash
-claude --plugin-dir /path/to/figma-sync
+claude --plugin-dir /path/to/figma-sync/plugins/figma-sync
 ```
 
 ### Figma MCP Server (Required)
@@ -183,21 +183,25 @@ You can disable this by removing the hooks from the plugin config.
 ```
 figma-sync/
 ├── .claude-plugin/
-│   └── plugin.json              # Plugin manifest
-├── skills/
-│   ├── init/SKILL.md            # /figma-sync:init
-│   ├── push/SKILL.md            # /figma-sync:push
-│   ├── pull/SKILL.md            # /figma-sync:pull
-│   ├── tokens/SKILL.md          # /figma-sync:tokens
-│   └── status/SKILL.md          # /figma-sync:status
-├── agents/
-│   ├── design-analyzer.md       # Analyzes code for design info
-│   └── code-generator.md        # Generates code from Figma specs
-├── hooks/
-│   └── hooks.json               # Auto-tracking hooks
-├── scripts/
-│   ├── track-component-change.sh
-│   └── check-sync-drift.sh
+│   └── marketplace.json         # Marketplace manifest (for plugin installation)
+├── plugins/
+│   └── figma-sync/              # The Claude Code plugin
+│       ├── .claude-plugin/
+│       │   └── plugin.json      # Plugin manifest
+│       ├── skills/
+│       │   ├── init/SKILL.md    # /figma-sync:init
+│       │   ├── push/SKILL.md    # /figma-sync:push
+│       │   ├── pull/SKILL.md    # /figma-sync:pull
+│       │   ├── tokens/SKILL.md  # /figma-sync:tokens
+│       │   └── status/SKILL.md  # /figma-sync:status
+│       ├── agents/
+│       │   ├── design-analyzer.md
+│       │   └── code-generator.md
+│       ├── hooks/
+│       │   └── hooks.json
+│       └── scripts/
+│           ├── track-component-change.sh
+│           └── check-sync-drift.sh
 ├── figma-plugin/                # Companion Figma plugin
 │   ├── manifest.json
 │   ├── package.json
