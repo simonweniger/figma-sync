@@ -1,8 +1,7 @@
 {
   "name": "figma-sync-marketplace",
   "owner": {
-    "name": "simonweniger",
-    "email": ""
+    "name": "simonweniger"
   },
   "metadata": {
     "description": "Bidirectional sync between code and Figma via Claude Code",
@@ -11,7 +10,7 @@
   "plugins": [
     {
       "name": "figma-sync",
-      "source": ".",
+      "source": "./plugins/figma-sync",
       "description": "Bidirectional sync between your codebase and Figma. Push components from code to Figma, pull designs from Figma to code, and keep design tokens in sync.",
       "version": "1.0.0",
       "author": {
