@@ -1,0 +1,15 @@
+{
+  "name": "figma-sync-plugin",
+  "version": "1.0.0",
+  "description": "Figma plugin companion for figma-sync Claude Code plugin. Exports components, styles, and tokens for code generation.",
+  "scripts": {
+    "build": "esbuild src/code.ts --bundle --outfile=dist/code.js --target=es2020 && cp src/ui.html dist/ui.html",
+    "watch": "esbuild src/code.ts --bundle --outfile=dist/code.js --target=es2020 --watch",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@figma/plugin-typings": "^1.100.0",
+    "esbuild": "^0.20.0",
+    "typescript": "^5.4.0"
+  }
+}

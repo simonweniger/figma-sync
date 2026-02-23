@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --bg-secondary: #f5f5f5;
+      --text: #333333;
+      --text-secondary: #666666;
+      --border: #e0e0e0;
+      --primary: #7c3aed;
+      --primary-hover: #6d28d9;
+      --primary-light: #ede9fe;
+      --success: #10b981;
+      --warning: #f59e0b;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Inter, -apple-system, BlinkMacSystemFont, sans-serif;
+      font-size: 13px;
+      color: var(--text);
+      background: var(--bg);
+      padding: 16px;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .header svg {
+      width: 28px;
+      height: 28px;
+      flex-shrink: 0;
+    }
+
+    .header h1 {
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .header p {
+      font-size: 11px;
+      color: var(--text-secondary);
+      margin-top: 2px;
+    }
+
+    .info-card {
+      background: var(--bg-secondary);
+      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 16px;
+    }
+
+    .info-card h3 {
+      font-size: 12px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+    }
+
+    .info-item {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+    }
+
+    .info-item .label {
+      color: var(--text-secondary);
+    }
+
+    .info-item .value {
+      font-weight: 500;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .section {
+      margin-bottom: 16px;
+    }
+
+    .section h2 {
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .export-options {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .export-btn {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--bg);
+      cursor: pointer;
+      transition: all 0.15s ease;
+      text-align: left;
+    }
+
+    .export-btn:hover {
+      border-color: var(--primary);
+      background: var(--primary-light);
+    }
+
+    .export-btn:active {
+      transform: scale(0.99);
+    }
+
+    .export-btn.primary {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+
+    .export-btn.primary:hover {
+      background: var(--primary-hover);
+    }
+
+    .export-btn .icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 16px;
+    }
+
+    .export-btn .details h3 {
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+
+    .export-btn .details p {
+      font-size: 11px;
+      color: var(--text-secondary);
+    }
+
+    .export-btn.primary .details p {
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .result {
+      display: none;
+      margin-top: 16px;
+    }
+
+    .result.visible {
+      display: block;
+    }
+
+    .result-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .result-header .badge {
+      background: var(--success);
+      color: white;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 10px;
+    }
+
+    .result-summary {
+      background: var(--bg-secondary);
+      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 12px;
+      font-size: 12px;
+    }
+
+    .result-summary .stat {
+      display: flex;
+      justify-content: space-between;
+      padding: 3px 0;
+    }
+
+    .copy-area {
+      position: relative;
+    }
+
+    .copy-area textarea {
+      width: 100%;
+      height: 120px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 8px;
+      font-family: 'SF Mono', Monaco, monospace;
+      font-size: 11px;
+      resize: vertical;
+      color: var(--text);
+      background: var(--bg-secondary);
+    }
+
+    .copy-btn {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      padding: 4px 10px;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-size: 11px;
+      cursor: pointer;
+      font-weight: 500;
+    }
+
+    .copy-btn:hover {
+      background: var(--primary-hover);
+    }
+
+    .instructions {
+      margin-top: 12px;
+      padding: 10px;
+      background: var(--primary-light);
+      border-radius: 8px;
+      font-size: 11px;
+      line-height: 1.5;
+    }
+
+    .instructions code {
+      background: rgba(124, 58, 237, 0.1);
+      padding: 1px 4px;
+      border-radius: 3px;
+      font-family: 'SF Mono', Monaco, monospace;
+      font-size: 10px;
+    }
+
+    .loading {
+      display: none;
+      text-align: center;
+      padding: 24px;
+      color: var(--text-secondary);
+    }
+
+    .loading.visible {
+      display: block;
+    }
+
+    .spinner {
+      width: 24px;
+      height: 24px;
+      border: 2px solid var(--border);
+      border-top-color: var(--primary);
+      border-radius: 50%;
+      animation: spin 0.6s linear infinite;
+      margin: 0 auto 8px;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .error {
+      display: none;
+      padding: 10px;
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      border-radius: 8px;
+      color: #dc2626;
+      font-size: 12px;
+      margin-top: 12px;
+    }
+
+    .error.visible {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <svg viewBox="0 0 32 32" fill="none">
+      <rect width="32" height="32" rx="8" fill="#7c3aed"/>
+      <path d="M10 11h12M10 16h12M10 21h8" stroke="white" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+    <div>
+      <h1>Figma Sync</h1>
+      <p>Export designs for Claude Code</p>
+    </div>
+  </div>
+
+  <div class="info-card" id="fileInfo">
+    <h3>File Info</h3>
+    <div class="info-grid">
+      <div class="info-item">
+        <span class="label">File</span>
+        <span class="value" id="fileName">Loading...</span>
+      </div>
+      <div class="info-item">
+        <span class="label">Pages</span>
+        <span class="value" id="pageCount">-</span>
+      </div>
+      <div class="info-item">
+        <span class="label">Components</span>
+        <span class="value" id="componentCount">-</span>
+      </div>
+      <div class="info-item">
+        <span class="label">Color styles</span>
+        <span class="value" id="colorStyleCount">-</span>
+      </div>
+      <div class="info-item">
+        <span class="label">Text styles</span>
+        <span class="value" id="textStyleCount">-</span>
+      </div>
+      <div class="info-item">
+        <span class="label">Selected</span>
+        <span class="value" id="selectionCount">-</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section" id="exportSection">
+    <h2>Export</h2>
+    <div class="export-options">
+      <button class="export-btn primary" onclick="exportAll()">
+        <div class="icon">*</div>
+        <div class="details">
+          <h3>Export All</h3>
+          <p>All components, styles, and tokens</p>
+        </div>
+      </button>
+      <button class="export-btn" onclick="exportSelection()">
+        <div class="icon">[]</div>
+        <div class="details">
+          <h3>Export Selection</h3>
+          <p>Only selected components and frames</p>
+        </div>
+      </button>
+      <button class="export-btn" onclick="exportTokens()">
+        <div class="icon">#</div>
+        <div class="details">
+          <h3>Export Tokens Only</h3>
+          <p>Color, text, and effect styles</p>
+        </div>
+      </button>
+    </div>
+  </div>
+
+  <div class="loading" id="loading">
+    <div class="spinner"></div>
+    <p>Scanning file...</p>
+  </div>
+
+  <div class="result" id="result">
+    <div class="result-header">
+      <span class="badge">Exported</span>
+    </div>
+    <div class="result-summary" id="resultSummary"></div>
+    <div class="copy-area">
+      <textarea id="exportData" readonly></textarea>
+      <button class="copy-btn" onclick="copyToClipboard()">Copy JSON</button>
+    </div>
+    <div class="instructions">
+      <strong>Next steps:</strong><br/>
+      1. Copy the JSON above<br/>
+      2. Save it to <code>.figma-sync/export.json</code> in your project<br/>
+      3. Run <code>/figma-sync:pull</code> in Claude Code to generate code
+    </div>
+  </div>
+
+  <div class="error" id="error"></div>
+
+  <script>
+    // Request file info on load
+    parent.postMessage({ pluginMessage: { type: 'get-info' } }, '*');
+
+    function exportAll() {
+      showLoading();
+      parent.postMessage({ pluginMessage: { type: 'export', scope: 'all' } }, '*');
+    }
+
+    function exportSelection() {
+      showLoading();
+      parent.postMessage({ pluginMessage: { type: 'export', scope: 'selection' } }, '*');
+    }
+
+    function exportTokens() {
+      showLoading();
+      parent.postMessage({ pluginMessage: { type: 'export', scope: 'tokens' } }, '*');
+    }
+
+    function showLoading() {
+      document.getElementById('loading').classList.add('visible');
+      document.getElementById('result').classList.remove('visible');
+      document.getElementById('error').classList.remove('visible');
+      document.getElementById('exportSection').style.display = 'none';
+    }
+
+    function hideLoading() {
+      document.getElementById('loading').classList.remove('visible');
+      document.getElementById('exportSection').style.display = 'block';
+    }
+
+    function copyToClipboard() {
+      const textarea = document.getElementById('exportData');
+      textarea.select();
+      document.execCommand('copy');
+
+      const btn = document.querySelector('.copy-btn');
+      btn.textContent = 'Copied!';
+      setTimeout(() => { btn.textContent = 'Copy JSON'; }, 2000);
+    }
+
+    onmessage = (event) => {
+      const msg = event.data.pluginMessage;
+      if (!msg) return;
+
+      switch (msg.type) {
+        case 'file-info':
+          document.getElementById('fileName').textContent = msg.data.fileName || 'Unknown';
+          document.getElementById('pageCount').textContent = msg.data.pageCount;
+          document.getElementById('componentCount').textContent = msg.data.componentCount;
+          document.getElementById('colorStyleCount').textContent = msg.data.colorStyleCount;
+          document.getElementById('textStyleCount').textContent = msg.data.textStyleCount;
+          document.getElementById('selectionCount').textContent = msg.data.selectionCount;
+          break;
+
+        case 'export-result':
+          hideLoading();
+          const json = JSON.stringify(msg.data, null, 2);
+          document.getElementById('exportData').value = json;
+
+          const summary = document.getElementById('resultSummary');
+          summary.innerHTML = `
+            <div class="stat"><span>Components</span><span>${msg.summary.componentCount}</span></div>
+            <div class="stat"><span>Color styles</span><span>${msg.summary.colorStyleCount}</span></div>
+            <div class="stat"><span>Text styles</span><span>${msg.summary.textStyleCount}</span></div>
+            <div class="stat"><span>Effect styles</span><span>${msg.summary.effectStyleCount}</span></div>
+            <div class="stat"><span>JSON size</span><span>${(json.length / 1024).toFixed(1)} KB</span></div>
+          `;
+
+          document.getElementById('result').classList.add('visible');
+          break;
+
+        case 'error':
+          hideLoading();
+          const errorEl = document.getElementById('error');
+          errorEl.textContent = msg.message;
+          errorEl.classList.add('visible');
+          break;
+      }
+    };
+  </script>
+</body>
+</html>

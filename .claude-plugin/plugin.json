@@ -1,0 +1,24 @@
+{
+  "name": "figma-sync",
+  "version": "1.0.0",
+  "description": "Bidirectional sync between your codebase and Figma. Push components from code to Figma, pull designs from Figma to code, and keep design tokens in sync - all using your local Figma MCP.",
+  "author": {
+    "name": "simonweniger",
+    "url": "https://github.com/simonweniger"
+  },
+  "homepage": "https://github.com/simonweniger/figma-sync",
+  "repository": "https://github.com/simonweniger/figma-sync",
+  "license": "MIT",
+  "keywords": [
+    "figma",
+    "design-sync",
+    "design-tokens",
+    "code-to-figma",
+    "figma-to-code",
+    "mcp",
+    "design-system"
+  ],
+  "skills": "./skills/",
+  "agents": "./agents/",
+  "hooks": "./hooks/hooks.json"
+}
