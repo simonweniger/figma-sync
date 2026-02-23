@@ -33,14 +33,27 @@ The Claude Code plugin uses two specialized agents:
 
 ### Claude Code Plugin
 
-Add the plugin marketplace and install:
+**From GitHub** (once published):
 
-```bash
+```
 /plugin marketplace add simonweniger/figma-sync
-/plugin install figma-sync
+/plugin install figma-sync@figma-sync-marketplace
 ```
 
-Or for local development:
+**From a local clone:**
+
+```bash
+git clone https://github.com/simonweniger/figma-sync.git
+```
+
+Then in Claude Code:
+
+```
+/plugin marketplace add /path/to/figma-sync
+/plugin install figma-sync@figma-sync-marketplace
+```
+
+**For quick local testing** (no install, loads at startup):
 
 ```bash
 claude --plugin-dir /path/to/figma-sync
